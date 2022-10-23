@@ -32,6 +32,7 @@ def smooth(points, new_point_weight=0.3):
         points[i][1] = current_mean
 
 def get_oversample_region(points):
+    '''
     max_dist = 0.0
     max_dist_idx = 0
 
@@ -46,9 +47,9 @@ def get_oversample_region(points):
 
     return max_dist_idx
     '''
+
     mid_voltage = points[-1][0] / 2.0
-    for i in range(points):
+    for i in range(len(points)):
         (voltage, current) = points[i]
         if voltage > mid_voltage:
             return i
-    '''

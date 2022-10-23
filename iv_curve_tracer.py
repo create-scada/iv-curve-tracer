@@ -23,7 +23,7 @@ class IV_Curve_Tracer:
         result = self.pv_current_sensor.get_current()
         return result
 
-    def _measure_one(self, dac_value, settle_time=0.005, num_measurements=2):
+    def _measure_one(self, dac_value, settle_time=0.002, cool_time=0.003, num_measurements=2):
 
         pv_voltage = 0.0
         pv_current = 0.0
@@ -41,7 +41,7 @@ class IV_Curve_Tracer:
                 pv_voltage += self._get_pv_voltage() * scale_factor
 
         self.dac.set_dac(0)
-        time.sleep(settle_time)
+        time.sleep(cool_time)
 
         #print(f'Measuring {dac_value} Current {pv_current} Voltage {pv_voltage}')
 
