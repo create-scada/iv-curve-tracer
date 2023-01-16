@@ -13,11 +13,11 @@ class Mcp4921:
         value = (1<<14) | (1<<13) | (1<<12) | value;
         value = value.to_bytes(2, 'big')
 
-        self.latch.value = True
-        self.cs.value = False
+        self.latch.value(True)
+        self.cs.value(False)
 
         self.spi.write(value)
 
-        self.latch.value = False
-        self.cs.value = True
+        self.latch.value(False)
+        self.cs.value(True)
 

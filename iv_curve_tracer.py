@@ -61,19 +61,22 @@ class IV_Curve_Tracer:
         start_idx = val_or_min(pmax_idx - 250, 0)
         end_idx = val_or_max(pmax_idx + 75, 4095)
 
-        points = []
+        points = [None] * 525
+        i = 0
         for point in self.measure(start_idx, end_idx, 1):
-            points.append(point)
+            points[i] = point
+            i += 1
 
-        points.sort(key=lambda x: x[0])
+        points[0:(i-1)].sort(key=lambda x: x[0])
 
-        oversample_idx = get_oversample_region(points) + start_idx
+        oversample_idx = get_oversample_region(points[0:(i-1)]) + start_idx
         oversample_start_idx = val_or_min(oversample_idx - 10, 0)
         oversample_end_idx = val_or_max(oversample_idx + 10, 4095)
 
         for _ in range(10):
             for point in self.measure(oversample_start_idx, oversample_end_idx, 1):
-                points.append(point)
+                points[i] = point
+                i += 1
 
         points.sort(key=lambda x: x[0])
 
