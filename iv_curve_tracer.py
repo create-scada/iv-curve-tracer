@@ -13,7 +13,7 @@ class IV_Curve_Tracer:
         self.pv_current_sensor = pv_current_sensor
         self.dac = dac
 
-    def _get_pv_voltage(self, scale_factor=21):
+    def _get_pv_voltage(self, scale_factor=11):
 
         result = self.pv_voltage_sensor.get_voltage() * scale_factor
         return result
@@ -58,10 +58,10 @@ class IV_Curve_Tracer:
         pmax_idx = find_pmax_idx(self.measure)
         print(f'Pmax idx {pmax_idx}')
 
-        start_idx = val_or_min(pmax_idx - 250, 0)
-        end_idx = val_or_max(pmax_idx + 75, 4095)
+        start_idx = val_or_min(pmax_idx - 200, 0)
+        end_idx = val_or_max(pmax_idx + 50, 4095)
 
-        points = [None] * 525
+        points = [None] * 350
         i = 0
         for point in self.measure(start_idx, end_idx, 1):
             points[i] = point
@@ -73,11 +73,11 @@ class IV_Curve_Tracer:
         oversample_start_idx = val_or_min(oversample_idx - 10, 0)
         oversample_end_idx = val_or_max(oversample_idx + 10, 4095)
 
-        for _ in range(10):
+        for _ in range(5):
             for point in self.measure(oversample_start_idx, oversample_end_idx, 1):
                 points[i] = point
                 i += 1
-
+        print(i)
         points.sort(key=lambda x: x[0])
 
         return points

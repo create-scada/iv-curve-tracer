@@ -35,16 +35,16 @@ pv_adc = Pico_ADC(27)
 pv_current_sensor = Tmcs1108(pv_adc, scale_factor, voltage_offset_factor)
 
 
-dac_spi_clk_pin=Pin(2)
-dac_spi_cs_pin=Pin(5, Pin.OUT)
-dac_spi_data_pin=Pin(3)
-dac_latch_pin=Pin(1, Pin.OUT)
+dac_spi_clk_pin = Pin(2)
+dac_spi_cs_pin = Pin(5, Pin.OUT)
+dac_spi_data_pin = Pin(3)
+dac_latch_pin = Pin(1, Pin.OUT)
 
 dac_spi = SPI(0,
               baudrate=500_000,
               phase=0,
               polarity=0,
-              bits=16,
+              bits=8,
               firstbit=SPI.MSB,
               sck=dac_spi_clk_pin,
               mosi=dac_spi_data_pin)
@@ -58,6 +58,4 @@ iv_curve_tracer = IV_Curve_Tracer(pv_voltage_sensor,
                                   dac)
 
 app = create_webapp(iv_curve_tracer)
-app.run()
-
-
+app.run(port=80)
