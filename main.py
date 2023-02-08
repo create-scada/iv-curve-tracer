@@ -9,7 +9,12 @@ import os
 from machine import Pin, SPI
 import time
 
-setup_wifi_ap("PI12345", "12345678")
+import json
+
+with open('settings.json') as json_file:
+    settings = json.load(json_file)
+
+setup_wifi_ap(settings['wifi_ssid'], settings['wifi_password'])
 
 try:
     os.mkdir('/data')

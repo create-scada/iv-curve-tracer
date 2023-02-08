@@ -30,6 +30,12 @@ def create_webapp(iv_curve_tracer):
             results.append(filename)
         return sorted(results, key=int, reverse=True)
 
+    @app.route('/clear')
+    def clear(request):
+        for filename in os.listdir('/data'):
+            os.remove(f'/data/{filename}')
+        return 'OK'
+
     @app.route('/trace')
     def trace(request):
         filename = request.args['file']
